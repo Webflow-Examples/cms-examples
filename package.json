@@ -1,0 +1,21 @@
+{
+  "name": "cms-examples",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "- Create a CLI to run it - Create multiple examples   - Guide Walkthrough   - Airtable Sync   - Notion Sync",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail \"npm run start-backend\" \"npm run start-frontend\"",
+    "start-backend": "nodemon server.js",
+    "start-frontend": "cd frontend && npm start"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}
