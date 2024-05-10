@@ -1,68 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import axiosInstance from '../utils/axiosInstance'
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  TextField,
+  Typography,
+  Box,
+} from "@mui/material";
 
-const CollectionItemForm = ({ collectionId }) => {
-  const [fields, setFields] = useState([]);  // To store field definitions from the API
-  const [formData, setFormData] = useState({});  // To store user inputs
+const CollectionItemForm = ({ collectionDetails, onItemCreated }) => {
+  const [fields, setFields] = useState([]);
+  const [formData, setFormData] = useState({
+    isArchived: false,
+    isDraft: false,
+    fieldData: {},
+  });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get(`/collections/${collectionId}`);
-        setFields(response.data.fields);  // Assuming fields are directly in response.data
-        initializeFormData(response.data.fields);
-      } catch (error) {
-        console.error('Error fetching collection fields:', error);
-      }
-    };
+    setFields(collectionDetails.fields);
+    initializeFormData(collectionDetails.fields);
+  }, [collectionDetails]);
 
-    fetchData();
-  }, [collectionId]);
-
-  // Initialize form data state based on fields
   const initializeFormData = (fields) => {
-    const initialData = {};
-    fields.forEach(field => {
-      initialData[field.displayName] = '';  // Initialize each field with an empty string or a default value
+    const fieldData = {};
+    fields.forEach((field) => {
+      fieldData[field.slug] = "";
     });
-    setFormData(initialData);
+    setFormData((prevData) => ({
+      ...prevData,
+      fieldData,
+    }));
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
+  const handleChange = (event, slug) => {
+    const { name, value, type, checked } = event.target;
+    if (type === "checkbox") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: checked,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        fieldData: {
+          ...prevData.fieldData,
+          [slug]: value,
+        },
+      }));
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axiosInstance.post(`/collections/items/${collectionId}`, formData);
-      console.log('Collection item created successfully');
-      // Optionally reset form or give user feedback
+      await axiosInstance.post(
+        `/collections/${collectionDetails.id}/items`,
+        formData
+      );
+      console.log("Collection item created successfully");
     } catch (error) {
-      console.error('Error creating collection item:', error);
+      console.error("Error creating collection item:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {fields.map(field => (
-        <div key={field.displayName}>
-          <label htmlFor={field.displayName}>{field.displayName}</label>
-          <input
-            type="text"  // Adjust input type based on field.type if necessary
-            id={field.displayName}
-            name={field.displayName}
-            value={formData[field.displayName] || ''}
-            onChange={handleChange}
-          />
-        </div>
+    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <Typography variant="h6">Create Item</Typography>
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formData.isArchived}
+              onChange={handleChange}
+              name="isArchived"
+            />
+          }
+          label="Is Archived?"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={formData.isDraft}
+              onChange={handleChange}
+              name="isDraft"
+            />
+          }
+          label="Is Draft?"
+        />
+      </FormGroup>
+      {fields.map((field) => (
+        <TextField
+          key={field.slug}
+          label={field.displayName}
+          type="text" // Adjust input type based on field.type if necessary
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          value={formData.fieldData[field.slug] || ""}
+          onChange={(e) => handleChange(e, field.slug)}
+        />
       ))}
-      <button type="submit">Submit</button>
-    </form>
+      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+        Submit
+      </Button>
+    </Box>
   );
 };
 

@@ -16,6 +16,8 @@
     "nodemon": "^3.1.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "cors": "^2.8.5"
   }
 }

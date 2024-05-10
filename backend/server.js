@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
-import axios from "axios";
 
 // Convert URL to local file path
 const __filename = fileURLToPath(import.meta.url);
@@ -26,10 +25,9 @@ app.use(express.json());
 
 // Setup the Webflow Client
 const accessToken = process.env.APP_TOKEN;
-console.log(accessToken);
 const webflow = new WebflowClient({ accessToken });
 
-// Endpoint to get all sites
+// Get all sites
 app.get("/api/sites", async (req, res) => {
   try {
     const data = await webflow.sites.list(); // Fetch sites from Webflow
@@ -40,7 +38,7 @@ app.get("/api/sites", async (req, res) => {
   }
 });
 
-// Endpoint to create a new collection with fields
+// Create a new collection with fields
 app.post("/api/collections/:siteId", async (req, res) => {
 
   // Formula to create fields in a collection
@@ -80,7 +78,7 @@ app.post("/api/collections/:siteId", async (req, res) => {
   }
 });
 
-// Endpoint to get collections for a specific site
+// Get collections for a specific site
 app.get("/api/collections/:siteId", async (req, res) => {
   try {
     const data = await webflow.collections.list(req.params.siteId);
@@ -91,8 +89,8 @@ app.get("/api/collections/:siteId", async (req, res) => {
   }
 });
 
-// Endpoint to get collection details
-app.get("/api/collections/:collectionId", async (req, res) => {
+// Get collection details
+app.get("/api/collections/:collectionId/details", async (req, res) => {
 
     try{
       const data = await webflow.collections.get(req.params.collectionId)
@@ -105,6 +103,31 @@ app.get("/api/collections/:collectionId", async (req, res) => {
     }
 
 
+})
+
+// Create a collection item
+app.post("/api/collections/:collectionId/items", async (req, res) => {
+  try{
+    const data = await webflow.collections.items.createItem(req.params.collectionId, req.body)
+    res.json(data)
+  } catch (error){
+    console.error("Error creating collection item:", error)
+    res.status(500).send("Failed to create collection item");
+  }
+})
+
+// Get all collection items
+app.get("/api/collections/:collectionId/items", async (req, res) =>{
+  try{
+
+    const data = await webflow.collections.items.listItems(req.params.collectionId)
+    res.json(data.items)
+
+  } catch (error){
+    console.error("Error fetching collection items:", error);
+    res.status(500).send("Failed to fetch collection items");
+
+  }
 })
 
 
