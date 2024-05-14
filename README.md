@@ -37,15 +37,17 @@ The backend is an Express server that handles user authentication and API reques
 To get started with this project, follow the steps below:
 
 1. **Clone the repository**:
-   \`\`\`sh
+
+   ```sh
    git clone https://github.com/your-username/webflow-cms-api-examples.git
    cd webflow-cms-api-examples
-   \`\`\`
+   ```
 
 2. **Install dependencies**:
-   \`\`\`sh
+
+   ```sh
    npm install
-   \`\`\`
+   ```
 
 3. **Set up NGROK**:
    - Ensure you have an NGROK account and get your NGROK auth token.
