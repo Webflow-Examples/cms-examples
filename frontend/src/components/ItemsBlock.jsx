@@ -23,6 +23,7 @@ const ItemsBlock = ({ selectedCollection }) => {
         const response = await axiosInstance.get(
           `/collections/${selectedCollection}/details`
         );
+        console.log(response.data);
         setFields(response.data.fields);
       } catch (error) {
         console.error("Error fetching schema:", error);

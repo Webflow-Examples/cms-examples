@@ -23,7 +23,6 @@ const ItemForm = ({ fields, selectedCollection, onItemCreated }) => {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   useEffect(() => {
-    console.log(fields);
     initializeFormData(fields);
   }, [fields]);
 

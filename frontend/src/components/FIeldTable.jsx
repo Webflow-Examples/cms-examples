@@ -22,7 +22,7 @@ function FieldTable({ selectedPreset }) {
           <TableBody>
             {selectedPreset.collection.fields.map((field) => (
               <TableRow
-                key={field.displayName} // Important for React list keys
+                key={field.displayName}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">

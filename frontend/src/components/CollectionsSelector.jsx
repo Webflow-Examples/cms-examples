@@ -11,9 +11,7 @@ import {
 const CollectionsSelector = ({ collections, loading, onSelectCollection }) => {
   const [selectedCollection, setSelectedCollection] = useState("");
 
-  console.log(collections);
-
-  // Handler to updat local stat and call the onSelectCollection prop
+  // Handler to update local state and call the onSelectCollection prop
   const handleSelectedCollection = (event) => {
     const collectionId = event.target.value;
     setSelectedCollection(collectionId);

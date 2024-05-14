@@ -10,7 +10,9 @@ const CollectionDelete = ({ selectedCollection, onDeleteCollection }) => {
       );
       onDeleteCollection();
       console.log("Collection Deleted:", response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error deleteing collection:", error);
+    }
   };
 
   return (

@@ -5,7 +5,6 @@ import { getToken } from "../utils/tokens.js";
 export const listSites = async (req, res) => {
   try {
     const accessToken = await getToken("user");
-    console.log(accessToken);
     const webflow = new WebflowClient({ accessToken });
 
     const data = await webflow.sites.list();
