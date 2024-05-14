@@ -1,137 +1,62 @@
-import { WebflowClient } from "webflow-api";
-import path from "path";
-import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
+import chalk from "chalk";
+import { startNgrok } from "./utils/ngrokManager.js"; // Adjust the path as necessary
+import Table from "cli-table3";
 
-// Convert URL to local file path
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+// Import routes
+import authRoutes from "./routes/authRoutes.js";
+import sitesRoutes from "./routes/sitesRoutes.js";
+import collectionsRoutes from "./routes/collectionRoutes.js";
+import itemRoutes from "./routes/itemRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// CORS options
-const corsOptions = {
-  origin: "http://localhost:3000", // Allow only this origin to access the resources
-  optionsSuccessStatus: 200, // For legacy browser support
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow only this origin to access the resources
+    optionsSuccessStatus: 200, // For legacy browser support
+  })
+);
 app.use(express.json());
 
-// Setup the Webflow Client
-const accessToken = process.env.APP_TOKEN;
-const webflow = new WebflowClient({ accessToken });
+app.use("/", authRoutes);
+app.use("/api/sites", sitesRoutes);
+app.use("/api/collections", collectionsRoutes);
+app.use("/api/collections", itemRoutes);
 
-// Get all sites
-app.get("/api/sites", async (req, res) => {
+const startServer = async () => {
   try {
-    const data = await webflow.sites.list(); // Fetch sites from Webflow
-    res.json(data.sites);
+    const ngrokUrl = await startNgrok(PORT);
+
+    const table = new Table({
+      head: ["Location", "URL"], // Define column headers
+      colWidths: [30, 60], // Define column widths
+    });
+
+    table.push(
+      ["Develoment URL (Frontend)", "http://localhost:3000"],
+      ["Auth URL (Backend)", `${ngrokUrl}/auth`],
+      ["Auth Callback URL", `${ngrokUrl}/auth/callback`]
+    );
+
+    console.log(table.toString());
+
+    console.log(
+      chalk.blue.inverse("\n\nNOTE:"),
+      chalk.blue(
+        "Add the Auth Callback URL to your App in your App Settings\n\n"
+      )
+    );
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
   } catch (error) {
-    console.error("Error fetching sites:", error);
-    res.status(500).send("Failed to fetch sites");
+    console.error("Failed to start the server with ngrok:", error);
+    process.exit(1);
   }
-});
+};
 
-// Create a new collection with fields
-app.post("/api/collections/:siteId", async (req, res) => {
-
-  // Formula to create fields in a collection
-  async function createFields(collectionId, fields) {
-
-    for (const field of fields) {
-      try {
-
-        // Create new field
-        const response = await webflow.collections.fields.create(
-          collectionId,
-          field
-        );
-
-        console.log("Field created:", response);
-      } catch (error) {
-        console.error("Error creating field:", field.name, error);
-      }
-    }
-  }
-
-  try {
-    const siteId = req.params.siteId;
-    const collectionDetails = {
-      displayName: req.body.collection.name,
-      singularName: req.body.collection.singularName,
-      slug: req.body.collection.slug,
-    };
-    const fields = req.body.collection.fields;
-    console.log(siteId)
-    const collection = await webflow.collections.create(siteId, collectionDetails);
-    console.log(`Created Collection: ${collection.id} successfully`)
-    await createFields(collection.id, fields);
-    console.log("All fields created successfully.");
-  } catch (error) {
-    console.error("Failed to create collection or fields:", error);
-  }
-});
-
-// Get collections for a specific site
-app.get("/api/collections/:siteId", async (req, res) => {
-  try {
-    const data = await webflow.collections.list(req.params.siteId);
-    res.json(data.collections);
-  } catch (error) {
-    console.error("Error fetching collections:", error);
-    res.status(500).send("Failed to fetch collections");
-  }
-});
-
-// Get collection details
-app.get("/api/collections/:collectionId/details", async (req, res) => {
-
-    try{
-      const data = await webflow.collections.get(req.params.collectionId)
-      res.json(data)
-
-    } catch (error){
-      console.error("Error fetching collection details:", error)
-      res.status(500).send("Failed to fetch collection");
-
-    }
-
-
-})
-
-// Create a collection item
-app.post("/api/collections/:collectionId/items", async (req, res) => {
-  try{
-    const data = await webflow.collections.items.createItem(req.params.collectionId, req.body)
-    res.json(data)
-  } catch (error){
-    console.error("Error creating collection item:", error)
-    res.status(500).send("Failed to create collection item");
-  }
-})
-
-// Get all collection items
-app.get("/api/collections/:collectionId/items", async (req, res) =>{
-  try{
-
-    const data = await webflow.collections.items.listItems(req.params.collectionId)
-    res.json(data.items)
-
-  } catch (error){
-    console.error("Error fetching collection items:", error);
-    res.status(500).send("Failed to fetch collection items");
-
-  }
-})
-
-
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+startServer();

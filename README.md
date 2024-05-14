@@ -19,3 +19,9 @@
 - Add Items: Adding single or multiple items to a collection.
 - Item States: Manage the state of items (draft, published, etc.).
 - Update Items: How to modify existing items.
+
+# TO DO
+
+- Add comments
+- Add Auth
+- Separate server into a routes file
