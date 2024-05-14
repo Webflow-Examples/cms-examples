@@ -52,9 +52,9 @@ To get started with this project, follow the steps below:
 3. **Set up NGROK**:
    - Ensure you have an NGROK account and get your NGROK auth token.
    - Store your NGROK credentials in your environment variables:
-     \`\`\`sh
+     ```sh
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
-     \`\`\`
+     ```
 
 ## Authentication
 
@@ -73,9 +73,10 @@ To authenticate the app, some setup is required in the Webflow app dashboard:
 ## Running the Example
 
 To start the project, run the following command:
-\`\`\`sh
+
+```sh
 npm start
-\`\`\`
+```
 
 This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the application.
 
