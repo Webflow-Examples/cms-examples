@@ -8,7 +8,7 @@ const webflow = new WebflowClient({ accessToken });
 export const listCollections = async (req, res) => {
   try {
     const data = await webflow.collections.list(req.params.siteId);
-    res.json(data.collections);
+    res.json(data.collections); // Respond with collection data
   } catch (error) {
     console.error("Error fetching collections:", error);
     res.status(500).send("Failed to fetch collections");
@@ -19,19 +19,19 @@ export const listCollections = async (req, res) => {
 export const getCollection = async (req, res) => {
   try {
     const data = await webflow.collections.get(req.params.collectionId);
-    res.json(data);
+    res.json(data); // Respond with collection details
   } catch (error) {
     console.error("Error fetching collection details:", error);
     res.status(500).send("Failed to fetch collection");
   }
 };
 
-// Create a preset collection and its fields
+// Create a preset collection and corresponding fields
 export const createCollectionWithFields = async (req, res) => {
   const siteId = req.params.siteId;
   const { name, singularName, slug, fields } = req.body.collection;
 
-  // Details of the new collection
+  // Define details of the new collection
   const collectionDetails = {
     displayName: name,
     singularName: singularName,
@@ -46,7 +46,7 @@ export const createCollectionWithFields = async (req, res) => {
     );
     console.log(`Created Collection: ${collection.id} successfully`);
 
-    // Attempt to create fields for the new collection
+    // Create fields for the new collection
     const fieldCreationResults = await createFields(collection.id, fields);
     console.log("All fields creation attempted.");
 
@@ -101,7 +101,7 @@ export const deleteCollection = async (req, res) => {
     const data = await webflow.collections.deleteCollection(
       req.params.collectionId
     );
-    res.json(data);
+    res.json(data); // Respond with data
   } catch (error) {
     console.error("Error deleting collection:", error);
     res.status(500).send("Failed to delete collection");

@@ -4,15 +4,17 @@ import chalk from "chalk";
 import { startNgrok } from "./utils/ngrokManager.js"; // Adjust the path as necessary
 import Table from "cli-table3";
 
-// Import routes
+// Import Routes
 import authRoutes from "./routes/authRoutes.js";
 import sitesRoutes from "./routes/sitesRoutes.js";
 import collectionsRoutes from "./routes/collectionRoutes.js";
 import itemRoutes from "./routes/itemRoutes.js";
 
+// Setup App
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+// Express Options
 app.use(
   cors({
     origin: "http://localhost:3000", // Allow only this origin to access the resources
@@ -21,11 +23,13 @@ app.use(
 );
 app.use(express.json());
 
+// Setup Routes
 app.use("/", authRoutes);
 app.use("/api/sites", sitesRoutes);
 app.use("/api/collections", collectionsRoutes);
 app.use("/api/collections", itemRoutes);
 
+// Start server with NGROK
 const startServer = async () => {
   try {
     const ngrokUrl = await startNgrok(PORT);
@@ -37,7 +41,7 @@ const startServer = async () => {
 
     table.push(
       ["Develoment URL (Frontend)", "http://localhost:3000"],
-      ["Auth URL (Backend)", `${ngrokUrl}/auth`],
+      ["Development URL (Backend)", `http://localhost:${PORT}`],
       ["Auth Callback URL", `${ngrokUrl}/auth/callback`]
     );
 

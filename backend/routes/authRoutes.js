@@ -10,15 +10,17 @@ import { storeToken, getToken } from "../utils/tokens.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Get Environment Variables from .env file in route
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 const router = express.Router();
 
+// Include scopes for your app. Be sure your App has been registered with the same scopes.
 const scopes = ["sites:read", "cms:read", "cms:write"];
 
+// Redirect root to Auth Screen or Frontend
 router.get("/", async (req, res) => {
   const token = await getToken("user");
-  console.log(token);
   if (!token) {
     res.redirect("/auth");
   } else {
@@ -26,6 +28,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Route to start Auth Flow. Redirects to Wefblow Auth screen
 router.get("/auth", (req, res) => {
   let publicUrl = getNgrokUrl();
 
@@ -37,6 +40,7 @@ router.get("/auth", (req, res) => {
   res.redirect(authorizeUrl);
 });
 
+// Callback URI to get code and access token
 router.get("/auth/callback", async (req, res) => {
   let publicUrl = getNgrokUrl();
 
