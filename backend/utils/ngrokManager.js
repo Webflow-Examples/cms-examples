@@ -11,7 +11,10 @@ export const startNgrok = async (port) => {
 
   try {
     // Start a new ngrok tunnel to the specified port
-    publicUrl = await ngrok.connect(port);
+    publicUrl = await ngrok.connect({
+      port: port,
+      authtoken: process.env.NGROK_AUTH_TOKEN, // Use the auth token from the environment variables
+    });
     // console.log(`Ngrok Tunnel started at ${publicUrl}`);
     return publicUrl; // Return the new ngrok URL
   } catch (error) {

@@ -4,6 +4,9 @@ import chalk from "chalk";
 import { startNgrok } from "./utils/ngrokManager.js"; // Adjust the path as necessary
 import Table from "cli-table3";
 
+// Import Webflow Client Middleware
+import webflowClientMiddleware from "./webflowClientMiddleware.js";
+
 // Import Routes
 import authRoutes from "./routes/authRoutes.js";
 import sitesRoutes from "./routes/sitesRoutes.js";
@@ -25,9 +28,9 @@ app.use(express.json());
 
 // Setup Routes
 app.use("/", authRoutes);
-app.use("/api/sites", sitesRoutes);
-app.use("/api/collections", collectionsRoutes);
-app.use("/api/collections", itemRoutes);
+app.use("/api/sites", webflowClientMiddleware, sitesRoutes);
+app.use("/api/collections", webflowClientMiddleware, collectionsRoutes);
+app.use("/api/collections", webflowClientMiddleware, itemRoutes);
 
 // Start server with NGROK
 const startServer = async () => {
@@ -41,18 +44,21 @@ const startServer = async () => {
 
     table.push(
       ["Develoment URL (Frontend)", "http://localhost:3000"],
-      ["Development URL (Backend)", `http://localhost:${PORT}`],
-      ["Auth Callback URL", `${ngrokUrl}/auth/callback`]
+      ["Development URL (Backend)", `http://localhost:${PORT}`]
     );
+
+    if (!process.env.SITE_TOKEN) {
+      table.push(["Auth Callback URL", `${ngrokUrl}/auth/callback`]);
+    }
 
     console.log(table.toString());
 
-    console.log(
-      chalk.blue.inverse("\n\nNOTE:"),
-      chalk.blue(
-        "Add the Auth Callback URL to your App in your App Settings\n\n"
-      )
-    );
+    if (!process.env.SITE_TOKEN) {
+      console.log(
+        chalk.blue.inverse("\n\nNOTE:"),
+        chalk.blue("Update your Auth Callback URL in your App Settings\n\n")
+      );
+    }
 
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);

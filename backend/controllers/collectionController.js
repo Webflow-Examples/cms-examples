@@ -1,13 +1,7 @@
-import { WebflowClient } from "webflow-api";
-import { getToken } from "../utils/tokens.js";
-
-const accessToken = await getToken("user");
-const webflow = new WebflowClient({ accessToken });
-
 // List Collections
 export const listCollections = async (req, res) => {
   try {
-    const data = await webflow.collections.list(req.params.siteId);
+    const data = await req.webflow.collections.list(req.params.siteId);
     res.json(data.collections); // Respond with collection data
   } catch (error) {
     console.error("Error fetching collections:", error);
@@ -18,7 +12,7 @@ export const listCollections = async (req, res) => {
 // Get Collection Details
 export const getCollection = async (req, res) => {
   try {
-    const data = await webflow.collections.get(req.params.collectionId);
+    const data = await req.webflow.collections.get(req.params.collectionId);
     res.json(data); // Respond with collection details
   } catch (error) {
     console.error("Error fetching collection details:", error);
@@ -40,7 +34,7 @@ export const createCollectionWithFields = async (req, res) => {
 
   try {
     // Create the collection in Webflow
-    const collection = await webflow.collections.create(
+    const collection = await req.webflow.collections.create(
       siteId,
       collectionDetails
     );
@@ -79,7 +73,7 @@ async function createFields(collectionId, fields) {
   // Create each field in parallel and return the results
   return Promise.all(
     fields.map((field) => {
-      return webflow.collections.fields
+      return req.webflow.collections.fields
         .create(collectionId, field)
         .then((response) => ({
           success: true,
@@ -98,7 +92,7 @@ async function createFields(collectionId, fields) {
 // Delete Collection
 export const deleteCollection = async (req, res) => {
   try {
-    const data = await webflow.collections.deleteCollection(
+    const data = await req.webflow.collections.deleteCollection(
       req.params.collectionId
     );
     res.json(data); // Respond with data

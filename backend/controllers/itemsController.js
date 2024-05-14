@@ -1,13 +1,7 @@
-import { WebflowClient } from "webflow-api";
-import { getToken } from "../utils/tokens.js";
-
-const accessToken = await getToken("user");
-const webflow = new WebflowClient({ accessToken });
-
 // List collection items
 export const listItems = async (req, res) => {
   try {
-    const data = await webflow.collections.items.listItems(
+    const data = await req.webflow.collections.items.listItems(
       req.params.collectionId
     );
     res.json(data.items);
@@ -20,7 +14,7 @@ export const listItems = async (req, res) => {
 // Create collection Item
 export const createItem = async (req, res) => {
   try {
-    const data = await webflow.collections.items.createItem(
+    const data = await req.webflow.collections.items.createItem(
       req.params.collectionId,
       req.body
     );
@@ -34,7 +28,7 @@ export const createItem = async (req, res) => {
 // Delete Collection Item
 export const deleteItem = async (req, res) => {
   try {
-    const data = await webflow.collections.items.deleteItem(
+    const data = await req.webflow.collections.items.deleteItem(
       req.params.collectionId,
       req.params.itemId
     );
