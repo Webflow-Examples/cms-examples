@@ -7,8 +7,6 @@ Welcome to the Webflow CMS API Examples repository! This repository is designed 
 - [Webflow CMS API Examples](#webflow-cms-api-examples)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
-  - [Frontend](#frontend)
-  - [Backend](#backend)
   - [Setup](#setup)
   - [Authentication](#authentication)
   - [Running the Example](#running-the-example)
@@ -17,20 +15,8 @@ Welcome to the Webflow CMS API Examples repository! This repository is designed 
 
 This repository contains examples to introduce developers to the Webflow CMS API. The project is split into two main parts:
 
-- **Frontend**: A React project that allows users to interact with the backend using interactive dropdowns, buttons, and forms to make API calls and retrieve information about the Webflow site and collections.
-- **Backend**: An Express server that authenticates users through an authentication screen, stores tokens in a SQLite database, and makes API calls to Webflow, returning the responses to the frontend.
-
-## Frontend
-
-The frontend is a React project that provides a user-friendly interface for making API calls to the Webflow CMS. Users can interact with various elements like dropdowns, buttons, and forms to send requests to the backend.
-
-## Backend
-
-The backend is an Express server that handles user authentication and API requests. It performs the following tasks:
-
-- Authenticates users through an authentication screen.
-- Stores tokens securely in a SQLite database.
-- Makes API calls to the Webflow CMS and returns the responses to the frontend.
+- **Frontend**: A React project that allows users to interact with the backend using interactive dropdowns, buttons, and forms to make calls to the backend server and retrieve information about the Webflow site and collections.
+- **Backend**: An Express server that authenticates users, stores tokens in a SQLite database, and makes API calls to Webflow, returning the responses to the frontend.
 
 ## Setup
 
@@ -55,6 +41,8 @@ To get started with this project, follow the steps below:
      ```sh
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
      ```
+4. **Create and Update Webflow App**:
+   If you don't already have a Webflow app, create an app by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app). Store your App's Client ID and Client Secret in the `.env` file in the root directory.
 
 ## Authentication
 
