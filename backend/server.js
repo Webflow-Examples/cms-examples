@@ -35,33 +35,40 @@ app.use("/api/collections", webflowClientMiddleware, itemRoutes);
 // Start server with NGROK
 const startServer = async () => {
   try {
+    // Start Ngrok
     const ngrokUrl = await startNgrok(PORT);
 
+    // Create a table to output in the CLI
     const table = new Table({
       head: ["Location", "URL"], // Define column headers
       colWidths: [30, 60], // Define column widths
     });
 
+    // Add URL information to the table
     table.push(
       ["Develoment URL (Frontend)", "http://localhost:3000"],
       ["Development URL (Backend)", `http://localhost:${PORT}`]
     );
 
+    // If using an App, also add the Redirect URI to the table
     if (!process.env.SITE_TOKEN) {
       table.push(["Auth Callback URL", `${ngrokUrl}/auth/callback`]);
     }
 
+    // Console log the table
     console.log(table.toString());
 
+    // If using an App, send a note to adjust the app's Redirect URI
     if (!process.env.SITE_TOKEN) {
       console.log(
         chalk.blue.inverse("\n\nNOTE:"),
-        chalk.blue("Update your Auth Callback URL in your App Settings\n\n")
+        chalk.blue("Update your Redirect URI in your App Settings\n\n")
       );
     }
 
+    // Start the server
     app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
+      // console.log(`Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
     console.error("Failed to start the server with ngrok:", error);
