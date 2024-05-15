@@ -6,8 +6,8 @@
   "main": "backend/server.js",
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run start-backend\" \"npm run start-frontend\"",
-    "start-backend": "cd backend && npm start",
-    "start-frontend": "cd frontend && npm run dev"
+    "start-backend": "cd backend && npm install && npm start",
+    "start-frontend": "cd frontend && npm install && npm run dev"
   },
   "author": "",
   "license": "ISC",
