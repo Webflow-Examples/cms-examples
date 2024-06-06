@@ -1,4 +1,4 @@
-import ngrok from "ngrok";
+import ngrok from "@ngrok/ngrok";
 
 let publicUrl; // Variable to store the current active ngrok URL
 
@@ -11,10 +11,11 @@ export const startNgrok = async (port) => {
 
   try {
     // Start a new ngrok tunnel to the specified port
-    publicUrl = await ngrok.connect({
+    const listener = await ngrok.forward({
       port: port,
       authtoken: process.env.NGROK_AUTH_TOKEN, // Use the auth token from the environment variables
     });
+    publicUrl = listener.url();
     // console.log(`Ngrok Tunnel started at ${publicUrl}`);
     return publicUrl; // Return the new ngrok URL
   } catch (error) {
