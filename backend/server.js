@@ -46,7 +46,7 @@ const startServer = async () => {
 
     // Add URL information to the table
     table.push(
-      ["Develoment URL (Frontend)", "http://localhost:3000"],
+      ["Development URL (Frontend)", "http://localhost:3000"],
       ["Development URL (Backend)", `http://localhost:${PORT}`]
     );
 
