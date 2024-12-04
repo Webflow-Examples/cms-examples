@@ -41,7 +41,7 @@ const startServer = async () => {
     // Create a table to output in the CLI
     const table = new Table({
       head: ["Location", "URL"], // Define column headers
-      colWidths: [30, 60], // Define column widths
+      colWidths: [30, 100], // Increase the width of the URL column
     });
 
     // Add URL information to the table
