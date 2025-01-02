@@ -25,8 +25,8 @@ To get started with this project, follow the steps below:
 1. **Clone the repository**:
 
    ```sh
-   git clone https://github.com/your-username/webflow-cms-api-examples.git
-   cd webflow-cms-api-examples
+   git clone https://github.com/your-username/cms-examples.git
+   cd cms-examples
    ```
 
 2. **Install dependencies**:
@@ -42,7 +42,7 @@ To get started with this project, follow the steps below:
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
      ```
 4. **Create and Update Webflow App**:
-   If you don't already have a Webflow app, create an app by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app). Store your App's Client ID and Client Secret in the `.env` file in the root directory.
+   If you don't already have a Webflow app, create an app by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app) Store your App's Client ID and Client Secret in the `.env` file in the root directory.
 
 ## Authentication
 
