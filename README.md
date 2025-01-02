@@ -42,21 +42,21 @@ To get started with this project, follow the steps below:
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
      ```
 4. **Create and Update Webflow App**:
-   If you don't already have a Webflow app, create an app by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app) Store your App's Client ID and Client Secret in the `.env` file in the root directory.
+   If you don't already have a Webflow App, create an App by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app) Store your App's Client ID and Client Secret in the `.env` file in the root directory.
 
 ## Authentication
 
-To authenticate the app, some setup is required in the Webflow app dashboard:
+To authenticate the App, some setup is required in the Webflow App dashboard:
 
-1. **Add the correct scopes**: Make sure the app has the following scopes:
+1. **Add the correct scopes**: Make sure the App has the following scopes:
 
    - `sites:read`
    - `cms:read`
    - `cms:write`
 
 2. **Configure the Redirect URI**:
-   - Once the app is running, you will be provided with a Redirect URI.
-   - Input this URI into the Redirect URI settings in the app dashboard.
+   - Once the App is running, you will be provided with a Redirect URI.
+   - Input this URI into the Redirect URI settings in the App dashboard.
 
 ## Running the Example
 
@@ -66,7 +66,7 @@ To start the project, run the following command:
 npm start
 ```
 
-This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the application.
+This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the App by navigating to the Frontend URL.
 
 ---
 
