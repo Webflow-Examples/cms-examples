@@ -25,7 +25,7 @@ To get started with this project, follow the steps below:
 1. **Clone the repository**:
 
    ```sh
-   git clone https://github.com/your-username/cms-examples.git
+   git clone https://github.com/Webflow-Examples/cms-examples.git
    cd cms-examples
    ```
 
