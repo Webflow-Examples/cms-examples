@@ -42,7 +42,7 @@ To get started with this project, follow the steps below:
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
      ```
 4. **Create and Update Webflow App**:
-   If you don't already have a Webflow app, [follow the steps in the documentation to register an App with Webflow](https://docs.developers.webflow.com/data/docs/register-an-app) Store your App's Client ID and Client Secret in the `.env` file in the root directory.
+   If you don't already have a Webflow App, [follow the steps in the documentation to register an App with Webflow](https://docs.developers.webflow.com/data/docs/register-an-app) and store your App's Client ID and Client Secret in the `.env` file in the root directory.
 
 ## App Configuration
 
@@ -66,7 +66,7 @@ To start the project, run the following command:
 npm start
 ```
 
-This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the application.
+This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the App by navigating to the Frontend URL.
 
 ---
 
