@@ -32,7 +32,7 @@ export const deleteItem = async (req, res) => {
       req.params.collectionId,
       req.params.itemId
     );
-    res.json(data);
+    res.status(200).send("Item deleted successfully");
   } catch (error) {
     console.error("Error deleting item:", error);
     res.status(500).send("Failed to delete item");
