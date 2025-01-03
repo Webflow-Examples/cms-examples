@@ -62,7 +62,9 @@ const startServer = async () => {
     if (!process.env.SITE_TOKEN) {
       console.log(
         chalk.blue.inverse("\n\nNOTE:"),
-        chalk.blue("Update your Redirect URI in your App Settings\n\n")
+        chalk.blue(
+          "Update your Redirect URI in your App Settings\n\nhttps://webflow.com/dashboard/"
+        )
       );
     }
 
