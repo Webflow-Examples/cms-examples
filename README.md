@@ -1,32 +1,32 @@
 # Webflow CMS API Examples
 
-Welcome to the Webflow CMS API Examples repository! This repository is designed to help developers get started with the Webflow CMS API by providing both frontend and backend examples.
+Welcome to the Webflow CMS API Examples repository. This repository includes both backend and frontend code samples to help developers get started with the Webflow CMS API. Follow along with the [Webflow CMS API Documentation](https://developers.webflow.com/data/docs/working-with-the-cms) to learn more.
 
 ## Table of Contents
 
 - [Webflow CMS API Examples](#webflow-cms-api-examples)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
-  - [Setup](#setup)
-  - [Authentication](#authentication)
+  - [Local Environment Setup](#local-environment-setup)
+  - [App Configuration](#app-configuration)
   - [Running the Example](#running-the-example)
 
 ## Overview
 
-This repository contains examples to introduce developers to the Webflow CMS API. The project is split into two main parts:
+This repository contains examples to introduce developers to the [Webflow CMS API](https://developers.webflow.com/data/docs/working-with-the-cms). The project is split into two main parts:
 
 - **Frontend**: A React project that allows users to interact with the backend using interactive dropdowns, buttons, and forms to make calls to the backend server and retrieve information about the Webflow site and collections.
 - **Backend**: An Express server that authenticates users, stores tokens in a SQLite database, and makes API calls to Webflow, returning the responses to the frontend.
 
-## Setup
+## Local Environment Setup
 
 To get started with this project, follow the steps below:
 
 1. **Clone the repository**:
 
    ```sh
-   git clone https://github.com/your-username/webflow-cms-api-examples.git
-   cd webflow-cms-api-examples
+   git clone https://github.com/Webflow-Examples/cms-examples.git
+   cd cms-examples
    ```
 
 2. **Install dependencies**:
@@ -36,27 +36,27 @@ To get started with this project, follow the steps below:
    ```
 
 3. **Set up NGROK**:
-   - Ensure you have an NGROK account and get your NGROK auth token.
+   - Ensure you have an NGROK account and get your NGROK auth token. Follow instructions on setting up and configuring your local environment using [NGROK](https://developers.webflow.com/data/docs/getting-started-data-clients#step-1-setup-your-local-development-environment).
    - Store your NGROK credentials in your environment variables:
      ```sh
      export NGROK_AUTH_TOKEN=your-ngrok-auth-token
      ```
 4. **Create and Update Webflow App**:
-   If you don't already have a Webflow app, create an app by following the directions [outlined here.](https://docs.developers.webflow.com/data/docs/register-an-app). Store your App's Client ID and Client Secret in the `.env` file in the root directory.
+   If you don't already have a Webflow App, [follow the steps in the documentation to register an App with Webflow](https://docs.developers.webflow.com/data/docs/register-an-app) and store your App's Client ID and Client Secret in the `.env` file in the root directory.
 
-## Authentication
+## App Configuration
 
-To authenticate the app, some setup is required in the Webflow app dashboard:
+For this code sample to work correctly, some setup is required in the Webflow App dashboard:
 
-1. **Add the correct scopes**: Make sure the app has the following scopes:
+1. **Add the correct scopes**: Make sure your App has the following scopes:
 
-   - `sites:read`
-   - `cms:read`
-   - `cms:write`
+   - `sites:read` - Allows listing and reading site information.
+   - `cms:read` - Permits reading CMS content.
+   - `cms:write` - Enables your App to modify CMS content.
 
 2. **Configure the Redirect URI**:
-   - Once the app is running, you will be provided with a Redirect URI.
-   - Input this URI into the Redirect URI settings in the app dashboard.
+   - Once the App is running (see below), NGROK will display your Redirect URI in the console
+   - Input this URI into the Redirect URI settings in the App dashboard.
 
 ## Running the Example
 
@@ -66,10 +66,8 @@ To start the project, run the following command:
 npm start
 ```
 
-This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the application.
+This will start both the frontend and backend servers. With NGROK set up, a secure tunnel will be established, and you will be able to access the App by navigating to the Frontend URL.
 
 ---
 
-Feel free to explore and modify the code to better understand how to interact with the Webflow CMS API. If you have any questions or run into issues, please open an issue in this repository.
-
-Happy coding!
+Explore and modify the code to learn more about the Webflow CMS API. If you have any questions or run into issues, please open an issue in this repository.
